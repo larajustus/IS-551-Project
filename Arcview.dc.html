@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #f4f1ec; color: #16130f; font-family: Archivo, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #b8450c; text-decoration: none; }
+  a:hover { color: #16130f; }
+  button { font-family: inherit; }
+  @keyframes arcTravel { 0% { left: 8%; } 100% { left: 88%; } }
+  @keyframes arcFlicker { 0%,100% { opacity: 1; transform: translate(-50%,-50%) scale(1); } 18% { opacity: .72; transform: translate(-50%,-50%) scale(.86); } 37% { opacity: 1; transform: translate(-50%,-50%) scale(1.12); } 61% { opacity: .8; transform: translate(-50%,-50%) scale(.94); } 79% { opacity: 1; transform: translate(-50%,-50%) scale(1.06); } }
+  @keyframes beadGrow { 0% { width: 4%; } 100% { width: 82%; } }
+  @keyframes sparkFly { 0% { opacity: 0; transform: translate(0,0) scale(1); } 8% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(.4); } }
+  @keyframes recBlink { 0%,45% { opacity: 1; } 55%,100% { opacity: .15; } }
+  @keyframes caretBlink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+  @keyframes glowPulse { 0%,100% { opacity: .55; } 50% { opacity: .95; } }
+</style>
+</helmet>
+
+<sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
+<section data-screen-label="01 Landing" style="min-height: 100vh; display: flex; flex-direction: column; background: #f4f1ec;">
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px clamp(20px, 4vw, 56px); border-bottom: 1px solid #ddd7cd;">
+    <div style="display: flex; align-items: baseline; gap: 10px;">
+      <span style="font-weight: 800; font-size: 20px; letter-spacing: 0.14em;">ARCVIEW</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #7a736a; text-transform: uppercase;">weld instruction</span>
+    </div>
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #7a736a; text-transform: uppercase;">for shop instructors</span>
+  </header>
+
+  <div style="flex: 1; display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); align-items: stretch;">
+    <div style="display: flex; flex-direction: column; justify-content: center; gap: 26px; padding: clamp(36px, 5vw, 84px) clamp(20px, 4vw, 64px);">
+      <div style="display: flex; align-items: center; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #b8450c;">
+        <span style="width: 22px; height: 2px; background: #d4530f;"></span>
+        <span>Helmet-cam review</span>
+      </div>
+      <h1 style="margin: 0; font-size: clamp(40px, 4.6vw, 72px); line-height: 0.96; letter-spacing: -0.025em; font-weight: 800; text-wrap: balance;">Watch a whole class weld at once.</h1>
+      <p style="margin: 0; max-width: 30ch; font-size: clamp(17px, 1.35vw, 21px); line-height: 1.5; color: #4a443d; text-wrap: pretty;">Every student's helmet camera streams to one screen. Review any arc live or after the bell, and pin feedback to the exact second it happened.</p>
+      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 16px;">
+        <button onClick="{{ goDashboard }}" style="border: none; cursor: pointer; background: #d4530f; color: #fffaf4; font-size: 19px; font-weight: 600; letter-spacing: 0.02em; padding: 21px 42px; box-shadow: 0 2px 0 #8e3406; display: flex; align-items: center; gap: 14px;" style-hover="background: #16130f; box-shadow: 0 2px 0 #000000;">
+          <span>Get Started</span>
+          <span style="font-size: 21px; line-height: 1;">&rarr;</span>
+        </button>
+        <div style="display: flex; align-items: baseline; gap: 8px; font-size: 15px; color: #7a736a;">
+          <span>Already teaching with Arcview?</span>
+          <a href="#signin" style="border-bottom: 1px solid #c9c1b5;">Sign in</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="position: relative; background: #0d0c0b; overflow: hidden; min-height: 420px;">
+      <div style="position: absolute; inset: 0; background: radial-gradient(120% 90% at 62% 58%, #46403a 0%, #22201d 38%, #0c0b0a 78%);"></div>
+      <div style="position: absolute; left: 0; right: 0; top: 58%; height: 26%; background: linear-gradient(180deg, #3b3630 0%, #211f1c 55%, #15130f 100%); transform: rotate(-2.4deg); box-shadow: 0 -1px 0 #565049 inset;"></div>
+      <div style="position: absolute; left: 6%; top: 58.6%; height: 9px; width: 82%; transform: rotate(-2.4deg); animation: beadGrow 7s linear infinite; background: linear-gradient(90deg, rgba(90,78,66,0.95) 0%, rgba(150,104,58,0.9) 55%, rgba(244,178,88,0.95) 100%); border-radius: 6px; filter: blur(0.4px);"></div>
+      <div style="position: absolute; top: 58.4%; animation: arcTravel 7s linear infinite;">
+        <div style="position: absolute; width: 340px; height: 340px; transform: translate(-50%,-50%); border-radius: 50%; background: radial-gradient(circle, rgba(255,232,196,0.5) 0%, rgba(255,170,70,0.22) 32%, rgba(255,120,30,0.06) 60%, transparent 72%); animation: glowPulse 0.28s steps(2, end) infinite;"></div>
+        <div style="position: absolute; width: 54px; height: 54px; transform: translate(-50%,-50%); border-radius: 50%; background: radial-gradient(circle, #ffffff 0%, #ffe9bd 34%, #ffa63c 62%, rgba(255,120,20,0) 78%); animation: arcFlicker 0.22s steps(3, end) infinite;"></div>
+        <div style="--sx: -90px; --sy: 64px; position: absolute; width: 3px; height: 3px; background: #ffd79a; border-radius: 50%; animation: sparkFly 0.9s linear infinite;"></div>
+        <div style="--sx: -52px; --sy: 92px; position: absolute; width: 2px; height: 2px; background: #ffb864; border-radius: 50%; animation: sparkFly 1.15s linear infinite 0.2s;"></div>
+        <div style="--sx: 68px; --sy: 78px; position: absolute; width: 3px; height: 3px; background: #fff0cf; border-radius: 50%; animation: sparkFly 1s linear infinite 0.45s;"></div>
+        <div style="--sx: 24px; --sy: 118px; position: absolute; width: 2px; height: 2px; background: #ff9a3c; border-radius: 50%; animation: sparkFly 1.3s linear infinite 0.7s;"></div>
+      </div>
+      <div style="position: absolute; right: -6%; bottom: -8%; width: 46%; height: 58%; background: linear-gradient(160deg, #2b2825 0%, #131211 70%); transform: rotate(-28deg); border-top-left-radius: 14px; box-shadow: -1px -1px 0 #4a453e inset;"></div>
+      <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13,12,11,0.55) 0%, rgba(13,12,11,0) 22%), radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(0,0,0,0.62) 100%);"></div>
+      <div style="position: absolute; top: 22px; left: 24px; display: flex; align-items: center; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #f4ede2; text-transform: uppercase;">
+        <span style="width: 9px; height: 9px; border-radius: 50%; background: #ff3b1f; animation: recBlink 1.4s steps(1, end) infinite;"></span>
+        <span>Live</span>
+        <span style="color: #9a9186;">Station 06 &middot; Bay A</span>
+      </div>
+      <div style="position: absolute; bottom: 22px; left: 24px; right: 24px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #b8b0a5;">
+        <span>HELMET CAM &middot; 1080P60</span>
+        <span style="color: #f4b03d;">{{ heroClock }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="02 Live class dashboard" style="min-height: 100vh; background: #f4f1ec; display: flex; flex-direction: column;">
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 20px clamp(20px, 3.2vw, 44px); border-bottom: 1px solid #ddd7cd; background: #f9f7f3; position: sticky; top: 0; z-index: 5;">
+    <div style="display: flex; align-items: baseline; gap: 16px;">
+      <span style="font-weight: 800; font-size: 17px; letter-spacing: 0.14em;">ARCVIEW</span>
+      <span style="width: 1px; height: 18px; background: #ddd7cd;"></span>
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <h1 style="margin: 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em;">WELD 1310 &middot; Intro to SMAW</h1>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #7a736a; text-transform: uppercase;">Bay A &middot; Period 2</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 22px; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #4a443d;">
+      <span style="display: flex; align-items: center; gap: 8px;">
+        <span style="width: 9px; height: 9px; border-radius: 50%; background: #ff3b1f; animation: recBlink 1.4s steps(1, end) infinite;"></span>
+        <span>{{ liveCount }} of {{ rosterCount }} arcs live</span>
+      </span>
+      <span style="color: #7a736a;">Class time {{ classClock }}</span>
+    </div>
+  </header>
+
+  <div style="padding: 26px clamp(20px, 3.2vw, 44px) 56px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(268px, 1fr)); gap: 18px;">
+      <sc-for list="{{ students }}" as="s" hint-placeholder-count="8">
+        <article style="background: #ffffff; border: 1px solid #ddd7cd; display: flex; flex-direction: column;" style-hover="border-color: #16130f;">
+          <div style="position: relative; aspect-ratio: 16 / 9; background: #0d0c0b; overflow: hidden;">
+            <div style="position: absolute; inset: 0; background: radial-gradient(120% 100% at 55% 62%, #3c3630 0%, #201e1b 42%, #0c0b0a 82%);"></div>
+            <div style="position: absolute; left: 0; right: 0; top: 60%; height: 24%; background: linear-gradient(180deg, #352f2a 0%, #1e1c19 60%, #131110 100%); transform: rotate(-2deg);"></div>
+            <sc-if value="{{ s.live }}" hint-placeholder-val="{{ true }}">
+              <div style="position: absolute; inset: 0;">
+                <div style="position: absolute; left: 6%; top: 60.4%; height: 6px; width: 80%; transform: rotate(-2deg); border-radius: 4px; background: linear-gradient(90deg, rgba(86,74,62,0.9) 0%, rgba(150,104,58,0.9) 58%, rgba(244,178,88,0.95) 100%); animation: beadGrow 7s linear infinite;"></div>
+                <div style="position: absolute; top: 60%; animation: arcTravel 7s linear infinite;">
+                  <div style="position: absolute; width: 150px; height: 150px; transform: translate(-50%,-50%); border-radius: 50%; background: radial-gradient(circle, rgba(255,230,192,0.45) 0%, rgba(255,168,66,0.2) 34%, transparent 70%); animation: glowPulse 0.3s steps(2, end) infinite;"></div>
+                  <div style="position: absolute; width: 22px; height: 22px; transform: translate(-50%,-50%); border-radius: 50%; background: radial-gradient(circle, #ffffff 0%, #ffe6b4 38%, #ffa63c 66%, rgba(255,120,20,0) 80%); animation: arcFlicker 0.22s steps(3, end) infinite;"></div>
+                  <div style="--sx: -34px; --sy: 26px; position: absolute; width: 2px; height: 2px; background: #ffd79a; border-radius: 50%; animation: sparkFly 0.95s linear infinite;"></div>
+                  <div style="--sx: 26px; --sy: 32px; position: absolute; width: 2px; height: 2px; background: #ffb864; border-radius: 50%; animation: sparkFly 1.2s linear infinite 0.4s;"></div>
+                </div>
+                <div style="position: absolute; right: -8%; bottom: -10%; width: 44%; height: 56%; background: linear-gradient(160deg, #2a2724 0%, #131211 72%); transform: rotate(-28deg);"></div>
+              </div>
+            </sc-if>
+            <div style="position: absolute; inset: 0; background: radial-gradient(120% 120% at 50% 50%, transparent 52%, rgba(0,0,0,0.6) 100%);"></div>
+            <div style="position: absolute; top: 10px; left: 11px; right: 11px; display: flex; align-items: center; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #ddd5c9;">
+              <span style="display: flex; align-items: center; gap: 6px;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: {{ s.dotColor }};"></span>
+                <span>{{ s.statusLabel }}</span>
+              </span>
+              <span style="color: #f4b03d;">{{ s.elapsed }}</span>
+            </div>
+          </div>
+          <div style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+              <span style="font-size: 16.5px; font-weight: 600; letter-spacing: -0.01em;">{{ s.name }}</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #7a736a;">ST {{ s.station }}</span>
+            </div>
+            <button onClick="{{ s.onReview }}" style="cursor: pointer; border: none; background: #d4530f; color: #fffaf4; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; padding: 13px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px;" style-hover="background: #16130f;">
+              <span>View this weld</span>
+              <span style="font-family: Archivo, sans-serif; font-size: 15px;">&rarr;</span>
+            </button>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isReview }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="03 Weld review" style="min-height: 100vh; background: #f4f1ec; display: flex; flex-direction: column;">
+  <header style="display: flex; align-items: center; gap: 18px; padding: 16px clamp(18px, 2.6vw, 32px); border-bottom: 1px solid #ddd7cd; background: #f9f7f3;">
+    <button onClick="{{ goDashboard }}" style="cursor: pointer; display: flex; align-items: center; gap: 10px; background: transparent; border: 1px solid #cfc7bb; color: #16130f; padding: 10px 16px 10px 12px; font-size: 14.5px; font-weight: 500;" style-hover="background: #16130f; color: #fffaf4; border-color: #16130f;">
+      <span style="font-size: 18px; line-height: 1;">&larr;</span>
+      <span>All students</span>
+    </button>
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <h1 style="margin: 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em;">{{ current.name }}</h1>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #7a736a; white-space: nowrap;">Station {{ current.station }} &middot; Lap joint, 6011 &middot; Rec 9:24 AM</span>
+    </div>
+  </header>
+
+  <div style="flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 400px); align-items: stretch;">
+    <div style="padding: clamp(16px, 2vw, 28px); display: flex; flex-direction: column; gap: 16px; min-width: 0;">
+      <div style="position: relative; aspect-ratio: 16 / 9; background: #0d0c0b; overflow: hidden;">
+        <div style="position: absolute; inset: 0; background: radial-gradient(120% 95% at 58% 60%, #433d37 0%, #221f1c 40%, #0c0b0a 80%);"></div>
+        <div style="position: absolute; left: 0; right: 0; top: 59%; height: 26%; background: linear-gradient(180deg, #3a352f 0%, #211f1c 58%, #15130f 100%); transform: rotate(-2.2deg);"></div>
+        <div style="position: absolute; left: 6%; top: 59.4%; height: 8px; width: 46%; transform: rotate(-2.2deg); border-radius: 5px; background: linear-gradient(90deg, rgba(88,76,64,0.95) 0%, rgba(152,106,60,0.92) 62%, rgba(236,164,76,0.95) 100%);"></div>
+        <div style="position: absolute; left: 52%; top: 59.2%;">
+          <div style="position: absolute; width: 260px; height: 260px; transform: translate(-50%,-50%); border-radius: 50%; background: radial-gradient(circle, rgba(255,231,194,0.4) 0%, rgba(255,168,66,0.17) 34%, transparent 70%);"></div>
+          <div style="position: absolute; width: 40px; height: 40px; transform: translate(-50%,-50%); border-radius: 50%; background: radial-gradient(circle, #ffffff 0%, #ffe9bd 36%, #ffa63c 64%, rgba(255,120,20,0) 80%);"></div>
+        </div>
+        <div style="position: absolute; right: -5%; bottom: -8%; width: 42%; height: 56%; background: linear-gradient(160deg, #2b2825 0%, #131211 72%); transform: rotate(-27deg);"></div>
+        <div style="position: absolute; inset: 0; background: radial-gradient(120% 120% at 50% 50%, transparent 54%, rgba(0,0,0,0.6) 100%);"></div>
+        <div style="position: absolute; top: 16px; left: 18px; display: flex; align-items: center; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #ddd5c9;">
+          <span style="background: rgba(20,18,16,0.72); padding: 5px 9px;">Paused &middot; 00:42</span>
+          <span style="color: #f4b03d;">Reviewing</span>
+        </div>
+        <div style="position: absolute; bottom: 16px; right: 18px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.12em; color: #9a9186;">HELMET CAM &middot; 0.5x</div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="position: relative; padding-top: 22px;">
+          <div style="position: relative; height: 8px; background: #e2dcd2;">
+            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 53.8%; background: #16130f;"></div>
+            <div style="position: absolute; left: 53.8%; top: -7px; bottom: -7px; width: 3px; background: #d4530f;"></div>
+            <sc-for list="{{ markers }}" as="m" hint-placeholder-count="3">
+              <div style="position: absolute; top: -22px; left: {{ m.pct }};">
+                <div style="transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 3px;">
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: {{ m.color }}; letter-spacing: 0.06em;">{{ m.time }}</span>
+                  <span style="width: 11px; height: 11px; background: {{ m.color }}; transform: rotate(45deg);"></span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #7a736a;">
+            <span style="color: #16130f;">00:42 / 01:18</span>
+            <span>3 comments on this weld</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside style="border-left: 1px solid #ddd7cd; background: #f9f7f3; display: flex; flex-direction: column; min-width: 0;">
+      <div style="padding: 20px 22px 14px; border-bottom: 1px solid #e4ded4;">
+        <h2 style="margin: 0 0 4px; font-size: 15px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;">Feedback</h2>
+        <p style="margin: 0; font-size: 13.5px; color: #7a736a;">Pinned to the second it happened. {{ current.name }} sees it on their next session.</p>
+      </div>
+
+      <div style="flex: 1; overflow: hidden; padding: 16px 22px; display: flex; flex-direction: column; gap: 14px;">
+        <sc-for list="{{ comments }}" as="c" hint-placeholder-count="2">
+          <div style="display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; align-items: start;">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: #b8450c; padding-top: 2px;">{{ c.time }}</span>
+            <p style="margin: 0; font-size: 14.5px; line-height: 1.45; color: #3f3933; text-wrap: pretty;">{{ c.text }}</p>
+          </div>
+        </sc-for>
+
+        <div style="margin-top: 2px; border: 2px solid #16130f; background: #ffffff;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; background: #16130f; color: #fffaf4; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase;">
+            <span>New comment at 00:42</span>
+            <span style="color: #f4b03d;">Bead width</span>
+          </div>
+          <div style="padding: 13px; min-height: 132px;">
+            <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #16130f; text-wrap: pretty;">{{ typed }}<span style="display: inline-block; width: 9px; height: 18px; background: #d4530f; vertical-align: -3px; margin-left: 2px; animation: caretBlink 1s steps(1, end) infinite;"></span></p>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 13px; border-top: 1px solid #e4ded4;">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #7a736a;">Sends to student</span>
+            <button style="cursor: pointer; border: none; background: #16130f; color: #fffaf4; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 11px 18px;" style-hover="background: #d4530f;">Pin comment</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 18px 22px 22px; border-top: 1px solid #e4ded4;">
+        <button style="width: 100%; cursor: pointer; border: none; background: #d4530f; color: #fffaf4; font-size: 17px; font-weight: 600; padding: 19px 20px; box-shadow: 0 2px 0 #8e3406; display: flex; align-items: center; justify-content: center; gap: 12px;" style-hover="background: #16130f; box-shadow: 0 2px 0 #000000;">
+          <span style="width: 11px; height: 11px; background: #fffaf4; transform: rotate(45deg);"></span>
+          <span>Comment at this moment</span>
+        </button>
+      </div>
+    </aside>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ showDemoNav }}" hint-placeholder-val="{{ true }}">
+<nav style="position: fixed; right: 16px; bottom: 16px; z-index: 40; display: flex; align-items: center; gap: 8px; background: rgba(249,247,243,0.94); border: 1px solid #ddd7cd; padding: 7px 9px;">
+  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #7a736a;">Screen</span>
+  <sc-for list="{{ screenNav }}" as="n" hint-placeholder-count="3">
+    <button onClick="{{ n.go }}" style="cursor: pointer; width: 24px; height: 24px; border: 1px solid {{ n.border }}; background: {{ n.bg }}; color: {{ n.fg }}; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;" style-hover="border-color: #16130f;">{{ n.label }}</button>
+  </sc-for>
+</nav>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;classSize&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:16,&quot;min&quot;:6,&quot;max&quot;:16,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Class&quot;,&quot;unit&quot;:&quot;students&quot;},&quot;liveOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Class&quot;},&quot;showDemoNav&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Demo&quot;}}">
+const ROSTER = [
+  ["Marcus Bell", "01", 1], ["Dani Ortiz", "02", 1], ["T. Nguyen", "03", 1], ["Kayla Frost", "04", 0],
+  ["Rob Salazar", "05", 1], ["Jesse Park", "06", 1], ["Amara Diallo", "07", 1], ["Cody Reeves", "08", 1],
+  ["Lena Vogt", "09", 0], ["Sam Achterberg", "10", 1], ["Priya Rao", "11", 1], ["Wes Colton", "12", 1],
+  ["Maya Brandt", "13", 0], ["Deon Carter", "14", 1], ["Ivy Sandoval", "15", 1], ["Hank Mueller", "16", 1]
+];
+
+const DRAFT = "Travel speed drops right here \u2014 watch the bead widen and the toe undercut. Hold a steadier 1/8\" arc length through the rest of the pass.";
+
+function mmss(t) {
+  const m = Math.floor(t / 60), s = Math.floor(t % 60);
+  return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+}
+
+class Component extends DCLogic {
+  state = { screen: 1, selected: 0, typed: 0, tick: 0 };
+
+  componentDidMount() {
+    this.clock = setInterval(() => this.setState(s => ({ tick: s.tick + 1 })), 1000);
+    this.typer = setInterval(() => this.setState(s => ({
+      typed: s.typed >= DRAFT.length + 26 ? 0 : s.typed + 1
+    })), 52);
+  }
+  componentWillUnmount() { clearInterval(this.clock); clearInterval(this.typer); }
+
+  go(n, i) { this.setState({ screen: n, selected: i == null ? this.state.selected : i }); }
+
+  renderVals() {
+    const t = this.state.tick;
+    const size = this.props.classSize ?? 16;
+    const liveOnly = this.props.liveOnly ?? false;
+    const students = ROSTER.slice(0, size).map(([name, station, live], i) => ({
+      name, station, live: !!live,
+      statusLabel: live ? "Live" : "Idle",
+      dotColor: live ? "#ff3b1f" : "#6b6661",
+      elapsed: live ? mmss(18 + i * 27 + t) : "--:--",
+      onReview: () => this.go(3, i)
+    }));
+
+    const nav = [1, 2, 3].map(n => ({
+      label: String(n),
+      go: () => this.go(n),
+      bg: this.state.screen === n ? "#16130f" : "transparent",
+      fg: this.state.screen === n ? "#fffaf4" : "#4a443d",
+      border: this.state.screen === n ? "#16130f" : "#cfc7bb"
+    }));
+
+    return {
+      isLanding: this.state.screen === 1,
+      isDashboard: this.state.screen === 2,
+      isReview: this.state.screen === 3,
+      goDashboard: () => this.go(2),
+      heroClock: mmss(102 + t),
+      classClock: mmss(1460 + t),
+      liveCount: students.filter(s => s.live).length,
+      rosterCount: students.length,
+      showDemoNav: this.props.showDemoNav ?? true,
+      students: liveOnly ? students.filter(s => s.live) : students,
+      current: students[this.state.selected] || students[0],
+      screenNav: nav,
+      typed: DRAFT.slice(0, Math.min(this.state.typed, DRAFT.length)),
+      markers: [
+        { time: "00:11", pct: "14.1%", color: "#7a736a" },
+        { time: "00:26", pct: "33.3%", color: "#7a736a" },
+        { time: "00:42", pct: "53.8%", color: "#d4530f" }
+      ],
+      comments: [
+        { time: "00:11", text: "Clean arc strike \u2014 no chatter, no stub. Do it exactly that way every time." },
+        { time: "00:26", text: "Work angle is creeping past 20\u00b0. Bring the rod back toward vertical before the corner." }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>
