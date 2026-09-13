@@ -31,11 +31,21 @@
 <sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
 <section data-screen-label="01 Landing" style="min-height: 100vh; display: flex; flex-direction: column; background: #f4f1ec;">
   <header style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px clamp(20px, 4vw, 56px); border-bottom: 1px solid #ddd7cd;">
-    <div style="display: flex; align-items: baseline; gap: 10px;">
-      <span style="font-weight: 800; font-size: 20px; letter-spacing: 0.14em;">ARCVIEW</span>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button onClick="{{ goLanding }}" style="cursor: pointer; background: transparent; border: none; padding: 0; font-weight: 800; font-size: 20px; letter-spacing: 0.14em; color: #16130f; border-bottom: 2px solid #d4530f;" style-hover="color: #b8450c;">ARCVIEW</button>
       <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #7a736a; text-transform: uppercase;">weld instruction</span>
     </div>
-    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #7a736a; text-transform: uppercase;">for shop instructors</span>
+    <div style="display: flex; align-items: center; gap: 18px;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #7a736a; text-transform: uppercase;">for shop instructors</span>
+      <sc-if value="{{ showDemoNav }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; align-items: center; gap: 7px; border-left: 1px solid #ddd7cd; padding-left: 18px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #a39a8f;">Screen</span>
+          <sc-for list="{{ screenNav }}" as="n" hint-placeholder-count="3">
+            <button onClick="{{ n.go }}" style="cursor: pointer; width: 23px; height: 23px; border: 1px solid {{ n.border }}; background: {{ n.bg }}; color: {{ n.fg }}; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;" style-hover="border-color: #16130f;">{{ n.label }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
   </header>
 
   <div style="flex: 1; display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); align-items: stretch;">
@@ -89,8 +99,8 @@
 <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ false }}">
 <section data-screen-label="02 Live class dashboard" style="min-height: 100vh; background: #f4f1ec; display: flex; flex-direction: column;">
   <header style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 20px clamp(20px, 3.2vw, 44px); border-bottom: 1px solid #ddd7cd; background: #f9f7f3; position: sticky; top: 0; z-index: 5;">
-    <div style="display: flex; align-items: baseline; gap: 16px;">
-      <span style="font-weight: 800; font-size: 17px; letter-spacing: 0.14em;">ARCVIEW</span>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <button onClick="{{ goLanding }}" title="Arcview home" style="cursor: pointer; flex-shrink: 0; display: flex; align-items: center; background: transparent; border: 1px solid #cfc7bb; border-bottom: 2px solid #d4530f; padding: 9px 14px; color: #16130f; font-weight: 800; font-size: 15px; letter-spacing: 0.14em;" style-hover="background: #16130f; color: #fffaf4; border-color: #16130f; border-bottom-color: #d4530f;">ARCVIEW</button>
       <span style="width: 1px; height: 18px; background: #ddd7cd;"></span>
       <div style="display: flex; align-items: baseline; gap: 10px;">
         <h1 style="margin: 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em;">WELD 1310 &middot; Intro to SMAW</h1>
@@ -103,6 +113,14 @@
         <span>{{ liveCount }} of {{ rosterCount }} arcs live</span>
       </span>
       <span style="color: #7a736a;">Class time {{ classClock }}</span>
+      <sc-if value="{{ showDemoNav }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; align-items: center; gap: 7px; border-left: 1px solid #ddd7cd; padding-left: 18px;">
+          <span style="font-size: 10px; letter-spacing: 0.14em; color: #a39a8f;">Screen</span>
+          <sc-for list="{{ screenNav }}" as="n" hint-placeholder-count="3">
+            <button onClick="{{ n.go }}" style="cursor: pointer; width: 23px; height: 23px; border: 1px solid {{ n.border }}; background: {{ n.bg }}; color: {{ n.fg }}; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;" style-hover="border-color: #16130f;">{{ n.label }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
     </div>
   </header>
 
@@ -154,14 +172,24 @@
 <sc-if value="{{ isReview }}" hint-placeholder-val="{{ false }}">
 <section data-screen-label="03 Weld review" style="min-height: 100vh; background: #f4f1ec; display: flex; flex-direction: column;">
   <header style="display: flex; align-items: center; gap: 18px; padding: 16px clamp(18px, 2.6vw, 32px); border-bottom: 1px solid #ddd7cd; background: #f9f7f3;">
-    <button onClick="{{ goDashboard }}" style="cursor: pointer; display: flex; align-items: center; gap: 10px; background: transparent; border: 1px solid #cfc7bb; color: #16130f; padding: 10px 16px 10px 12px; font-size: 14.5px; font-weight: 500;" style-hover="background: #16130f; color: #fffaf4; border-color: #16130f;">
+    <button onClick="{{ goLanding }}" title="Arcview home" style="cursor: pointer; flex-shrink: 0; display: flex; align-items: center; background: transparent; border: 1px solid #cfc7bb; border-bottom: 2px solid #d4530f; padding: 9px 14px; color: #16130f; font-weight: 800; font-size: 15px; letter-spacing: 0.14em;" style-hover="background: #16130f; color: #fffaf4; border-color: #16130f; border-bottom-color: #d4530f;">ARCVIEW</button>
+    <button onClick="{{ goDashboard }}" style="cursor: pointer; flex-shrink: 0; white-space: nowrap; display: flex; align-items: center; gap: 10px; background: transparent; border: 1px solid #cfc7bb; color: #16130f; padding: 10px 16px 10px 12px; font-size: 14.5px; font-weight: 500;" style-hover="background: #16130f; color: #fffaf4; border-color: #16130f;">
       <span style="font-size: 18px; line-height: 1;">&larr;</span>
       <span>All students</span>
     </button>
-    <div style="display: flex; align-items: baseline; gap: 12px;">
-      <h1 style="margin: 0; font-size: 19px; font-weight: 600; letter-spacing: -0.01em;">{{ current.name }}</h1>
-      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #7a736a; white-space: nowrap;">Station {{ current.station }} &middot; Lap joint, 6011 &middot; Rec 9:24 AM</span>
+    <span style="width: 1px; height: 18px; background: #ddd7cd; flex-shrink: 0;"></span>
+    <div style="display: flex; align-items: baseline; gap: 12px; min-width: 0;">
+      <h1 style="margin: 0; flex-shrink: 0; white-space: nowrap; font-size: 19px; font-weight: 600; letter-spacing: -0.01em;">{{ current.name }}</h1>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #7a736a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;">Station {{ current.station }} &middot; Lap joint, 6011 &middot; Rec 9:24 AM</span>
     </div>
+    <sc-if value="{{ showDemoNav }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 7px; border-left: 1px solid #ddd7cd; padding-left: 18px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #a39a8f;">Screen</span>
+        <sc-for list="{{ screenNav }}" as="n" hint-placeholder-count="3">
+          <button onClick="{{ n.go }}" style="cursor: pointer; width: 23px; height: 23px; border: 1px solid {{ n.border }}; background: {{ n.bg }}; color: {{ n.fg }}; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;" style-hover="border-color: #16130f;">{{ n.label }}</button>
+        </sc-for>
+      </div>
+    </sc-if>
   </header>
 
   <div style="flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 400px); align-items: stretch;">
@@ -211,7 +239,7 @@
         <p style="margin: 0; font-size: 13.5px; color: #7a736a;">Pinned to the second it happened. {{ current.name }} sees it on their next session.</p>
       </div>
 
-      <div style="flex: 1; overflow: hidden; padding: 16px 22px; display: flex; flex-direction: column; gap: 14px;">
+      <div style="flex: 1; overflow: hidden; padding: 14px 22px; display: flex; flex-direction: column; gap: 12px;">
         <sc-for list="{{ comments }}" as="c" hint-placeholder-count="2">
           <div style="display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; align-items: start;">
             <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: #b8450c; padding-top: 2px;">{{ c.time }}</span>
@@ -224,7 +252,7 @@
             <span>New comment at 00:42</span>
             <span style="color: #f4b03d;">Bead width</span>
           </div>
-          <div style="padding: 13px; min-height: 132px;">
+          <div style="padding: 13px; min-height: 104px;">
             <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #16130f; text-wrap: pretty;">{{ typed }}<span style="display: inline-block; width: 9px; height: 18px; background: #d4530f; vertical-align: -3px; margin-left: 2px; animation: caretBlink 1s steps(1, end) infinite;"></span></p>
           </div>
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 13px; border-top: 1px solid #e4ded4;">
@@ -234,7 +262,7 @@
         </div>
       </div>
 
-      <div style="padding: 18px 22px 22px; border-top: 1px solid #e4ded4;">
+      <div style="padding: 14px 22px 18px; border-top: 1px solid #e4ded4;">
         <button style="width: 100%; cursor: pointer; border: none; background: #d4530f; color: #fffaf4; font-size: 17px; font-weight: 600; padding: 19px 20px; box-shadow: 0 2px 0 #8e3406; display: flex; align-items: center; justify-content: center; gap: 12px;" style-hover="background: #16130f; box-shadow: 0 2px 0 #000000;">
           <span style="width: 11px; height: 11px; background: #fffaf4; transform: rotate(45deg);"></span>
           <span>Comment at this moment</span>
@@ -245,14 +273,7 @@
 </section>
 </sc-if>
 
-<sc-if value="{{ showDemoNav }}" hint-placeholder-val="{{ true }}">
-<nav style="position: fixed; right: 16px; bottom: 16px; z-index: 40; display: flex; align-items: center; gap: 8px; background: rgba(249,247,243,0.94); border: 1px solid #ddd7cd; padding: 7px 9px;">
-  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #7a736a;">Screen</span>
-  <sc-for list="{{ screenNav }}" as="n" hint-placeholder-count="3">
-    <button onClick="{{ n.go }}" style="cursor: pointer; width: 24px; height: 24px; border: 1px solid {{ n.border }}; background: {{ n.bg }}; color: {{ n.fg }}; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;" style-hover="border-color: #16130f;">{{ n.label }}</button>
-  </sc-for>
-</nav>
-</sc-if>
+
 
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;classSize&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:16,&quot;min&quot;:6,&quot;max&quot;:16,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Class&quot;,&quot;unit&quot;:&quot;students&quot;},&quot;liveOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Class&quot;},&quot;showDemoNav&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Demo&quot;}}">
@@ -308,6 +329,7 @@ class Component extends DCLogic {
       isDashboard: this.state.screen === 2,
       isReview: this.state.screen === 3,
       goDashboard: () => this.go(2),
+      goLanding: () => this.go(1),
       heroClock: mmss(102 + t),
       classClock: mmss(1460 + t),
       liveCount: students.filter(s => s.live).length,
